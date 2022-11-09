@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./matrix.css">
+    <title>MyBaby</title>
+</head>
+<body>
+      <audio autoplay>
+        <source src="./assets/musicBg1.mp3" type="audio/mp3">
+        </audio>
+    <div class="container">
+        <div class="heart">
+        </div>
+        <span id="text1"></span>
+        <span id="text2"></span>
+    </div>
+
+    <svg id="filters">
+        <defs>
+            <filter id="threshold">
+                <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0
+                                        0 1 0 0 0
+                                        0 0 1 0 0
+                                        0 0 0 255 -140" />
+            </filter>
+        </defs>
+    </svg>
+
+      <script src="./anime.min.js"></script>
+    <script src="./matrix.js"></script>
+   
+    <script>
+        const container = document.querySelector('.container')
+      
+//         window.addEventListener("DOMContentLoaded", event => {
+//   const audio = document.querySelector("audio");
+//   audio.volume = 0.2;
+//   audio.play();
+// });
+      
+        // var source = "./assets/musicBg1.mp3"
+        //     var audio = document.createElement("audio");
+        // //
+        // audio.autoplay = true;
+        // //
+        // audio.load()
+        // audio.addEventListener("load", function() { 
+        //     audio.play(); 
+        // }, true);
+        // audio.src = source;
+       
+       
+        for(var i=1; i< 100; i++) {
+            const hearts = document.createElement('div')
+            hearts.classList.add('heart')
+            container.appendChild(hearts)
+        }
+
+        // const hers = document.createElement('div')
+        //     hearts.classList.add('her')
+        //     container.appendChild(hers)
+
+        function animateHearts() {
+            anime({
+                targets: '.heart',
+                translateX: function() {
+                    return anime.random(-700, 700)
+
+                },
+                translateY: function() {
+                    return anime.random(-500, 500)
+                },
+                rotate: 45,
+                scale: function () {
+                    return anime.random(1, 5)
+                },
+                easing: 'easeInOutBack',
+                duration: 3000,
+                delay: anime.stagger(10),
+                complete: animateHearts,
+            },
+             {
+                targets: '.her',
+                strokeDashoffset: [anime.setDashoffset, 0],
+                easing: 'easeInOutSine',
+                rotate: 90,
+                duration: 1500,
+                delay: function(el, i) { return i * 250 },
+                direction: 'alternate',
+                loop: true
+             }
+            )
+        }
+        animateHearts();
+    </script>
+</body>
+</html>
